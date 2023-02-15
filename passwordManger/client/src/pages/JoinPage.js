@@ -1,19 +1,29 @@
 import React from 'react'
 import Axios from "axios";
 import {useState} from "react"
-
+import { useNavigate } from 'react-router-dom';
 const JoinPage = () => {
   const [password, setPassword]= useState("")
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-
+  const navigate = useNavigate()
   const addPassword = () => {
     Axios.post("http://localhost:3001/addpassword", {
       password:password,
       name:name,
       phone:phone,
+    }).then((res)=>{
+      alert("로그인화면 이동")
+     
+      navigate("/")
+      
     });
+
+    
+   
   };
+
+
   return (
     <div className="App">
       <div className="AddingPassword">

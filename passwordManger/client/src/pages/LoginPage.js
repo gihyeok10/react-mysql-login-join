@@ -1,6 +1,8 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import { useSelector, useDispatch } from "react-redux";
+import { loginAction } from '../redux/actions/loginAction';
 import  Axios  from 'axios'
 const LoginPage = () => {
   const [password, setPassword]= useState("")
@@ -9,6 +11,7 @@ const LoginPage = () => {
   const joinGo = () => {
     navigate("/join")
   } 
+  const dispatch = useDispatch();
   
   const handelLogin = () => {
     Axios.post("http://localhost:3001/login",{
@@ -17,6 +20,7 @@ const LoginPage = () => {
     }).then((res)=>{
       console.log("핸들로긴",res)
       if(res.data[0].cnt === 1){
+        dispatch(loginAction.login(name,password))
         alert("로그인됌~이동함~")
         navigate("/success")
       }
