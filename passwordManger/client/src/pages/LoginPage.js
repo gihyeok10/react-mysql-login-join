@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { loginAction } from '../redux/actions/loginAction';
 import  Axios  from 'axios'
@@ -12,7 +12,23 @@ const LoginPage = () => {
     navigate("/join")
   } 
   const dispatch = useDispatch();
-  
+  const id = "v5fKtgSmq9N8oc_FeG_7"
+  const pw = "XAZi9ViGP4"
+  const newsApi = async() => {
+     Axios.get("/v1/search/news.json",{
+      params:{
+        query:"스포츠"
+      },
+      headers:{
+        'X-Naver-Client-Id':id,
+        'X-Naver-Client-Secret':pw,
+      }
+      
+    }).then((res)=> {
+      console.log("뉴스데이타다",res.data)
+    })
+  }
+  useEffect(() => {newsApi()},[])
   const handelLogin = () => {
     Axios.post("http://localhost:3001/login",{
       password:password,
