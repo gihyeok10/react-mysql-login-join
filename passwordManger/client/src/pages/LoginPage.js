@@ -35,7 +35,7 @@ const LoginPage = () => {
   const onClick = async () => {
     try {
       const response = await Axios.get(
-        'https://newsapi.org/v2/top-headlines?country=kr&apiKey=95dbe05fd0a94565ad2bb9718feb8d06',
+        'https://newsapi.org/v2/everything?q=bitcoin&apiKey=95dbe05fd0a94565ad2bb9718feb8d06',
       );
       setData(response.data);
       console.log(response.data)
@@ -87,6 +87,13 @@ const LoginPage = () => {
         <button onClick={onClick}>api Go!!</button>
 
       </div>
+
+          {data&& data.articles.map((item,index)=> {
+            return <div key={item.index}><h1>{item.title}</h1>
+            <p>{item.content}</p>
+            <img src={item.urlToImage}/>
+            </div>
+          })}
       </div>
   )
 }
