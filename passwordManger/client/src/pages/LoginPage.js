@@ -12,23 +12,37 @@ const LoginPage = () => {
     navigate("/join")
   } 
   const dispatch = useDispatch();
-  const id = "v5fKtgSmq9N8oc_FeG_7"
-  const pw = "XAZi9ViGP4"
-  const newsApi = async() => {
-     Axios.get("/v1/search/news.json",{
-      params:{
-        query:"스포츠"
-      },
-      headers:{
-        'X-Naver-Client-Id':id,
-        'X-Naver-Client-Secret':pw,
-      }
+  // const id = "v5fKtgSmq9N8oc_FeG_7"
+  // const pw = "XAZi9ViGP4"
+  // const newsApi = async() => {
+  //    Axios.get("/v1/search/news.json",{
+  //     params:{
+  //       query:"스포츠"
+  //     },
+  //     headers:{
+  //       'X-Naver-Client-Id':id,
+  //       'X-Naver-Client-Secret':pw,
+  //     }
       
-    }).then((res)=> {
-      console.log("뉴스데이타다",res.data)
-    })
-  }
-  useEffect(() => {newsApi()},[])
+  //   }).then((res)=> {
+  //     console.log("뉴스데이타다",res.data)
+  //   })
+  // }
+  // useEffect(() => {newsApi()},[])
+
+
+  const [data, setData] = useState(null);  
+  const onClick = async () => {
+    try {
+      const response = await Axios.get(
+        'https://newsapi.org/v2/top-headlines?country=kr&apiKey=95dbe05fd0a94565ad2bb9718feb8d06',
+      );
+      setData(response.data);
+      console.log(response.data)
+    } catch(e) {
+      console.log(e);
+    }    
+  };
   const handelLogin = () => {
     Axios.post("http://localhost:3001/login",{
       password:password,
@@ -70,6 +84,7 @@ const LoginPage = () => {
  
         <button onClick={handelLogin}>로그인</button>
         <button onClick={joinGo}>회원가입</button>
+        <button onClick={onClick}>api Go!!</button>
 
       </div>
       </div>
