@@ -12,30 +12,30 @@ const LoginPage = () => {
     navigate("/join")
   } 
   const dispatch = useDispatch();
-  // const id = "v5fKtgSmq9N8oc_FeG_7"
-  // const pw = "XAZi9ViGP4"
-  // const newsApi = async() => {
-  //    Axios.get("/v1/search/news.json",{
-  //     params:{
-  //       query:"스포츠"
-  //     },
-  //     headers:{
-  //       'X-Naver-Client-Id':id,
-  //       'X-Naver-Client-Secret':pw,
-  //     }
+  const id = "v5fKtgSmq9N8oc_FeG_7"
+  const pw = "XAZi9ViGP4"
+  const newsApi = async() => {
+     Axios.get("/v1/search/news.json",{
+      params:{
+        query:"스포츠"
+      },
+      headers:{
+        'X-Naver-Client-Id':id,
+        'X-Naver-Client-Secret':pw,
+      }
       
-  //   }).then((res)=> {
-  //     console.log("뉴스데이타다",res.data)
-  //   })
-  // }
-  // useEffect(() => {newsApi()},[])
+    }).then((res)=> {
+      console.log("뉴스데이타다",res.data)
+    })
+  }
+  useEffect(() => {newsApi()},[])
 
 
   const [data, setData] = useState(null);  
   const onClick = async () => {
     try {
       const response = await Axios.get(
-        'https://newsapi.org/v2/everything?q=bitcoin&apiKey=95dbe05fd0a94565ad2bb9718feb8d06',
+        'https://newsapi.org/v2/top-headlines?country=kr&category=business&apiKey=95dbe05fd0a94565ad2bb9718feb8d06',
       );
       setData(response.data);
       console.log(response.data)
@@ -89,9 +89,10 @@ const LoginPage = () => {
       </div>
 
           {data&& data.articles.map((item,index)=> {
-            return <div key={item.index}><h1>{item.title}</h1>
-            <p>{item.content}</p>
-            <img src={item.urlToImage}/>
+            return <div key={item.index}><h4>{item.title}</h4>
+            <p>{item.description}</p>
+            <img className='sum' src={item.urlToImage}/>
+            <a href={item.url}>자세히보러가기</a>
             </div>
           })}
       </div>
